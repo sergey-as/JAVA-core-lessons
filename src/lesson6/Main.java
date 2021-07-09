@@ -2,10 +2,7 @@ package lesson6;
 
 import java.time.Instant;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.function.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -46,11 +43,11 @@ public class Main {
 //        Stream.of(new Person(), new Person()). ..;
 
         List<Person> list = new ArrayList<>();
-        list.add(new Person(1, "Ptero", LocalDate.of(1996, 11, 20)));
-        list.add(new Person(4, "Oksana", LocalDate.of(2005, 5, 2)));
-        list.add(new Person(3, "Marta", LocalDate.of(1993, 6, 14)));
-        list.add(new Person(2, "Taras", LocalDate.of(1991, 1, 10)));
-        list.add(new Person(5, "Olenka", LocalDate.of(1991, 1, 10)));
+        list.add(new Person(1, "Ptero", "Ukrainian", LocalDate.of(1996, 11, 20)));
+        list.add(new Person(2, "Taras", "Polish", LocalDate.of(1991, 1, 10)));
+        list.add(new Person(3, "Marta", "Ukrainian", LocalDate.of(1993, 6, 14)));
+        list.add(new Person(4, "Oksana", "Polish", LocalDate.of(2005, 5, 2)));
+        list.add(new Person(5, "Olenka", "Hungarian", LocalDate.of(1991, 1, 10)));
 
         // 1. Вивести всі елементи на екран
 //        list.forEach(person -> System.out.println(person));
@@ -97,14 +94,71 @@ public class Main {
 //                .collect(Collectors.toList());
 
         // 6. Знайти найтсаршу людину
-        final Optional<Person> max = list.stream()
-                .max((o1, o2) -> o2.getBirthDate().compareTo(o1.getBirthDate()));
-        System.out.println(max);
-53:30
+//        final Optional<Person> max = list.stream()
+//                .max((o1, o2) -> o2.getBirthDate().compareTo(o1.getBirthDate()));
+//        System.out.println(max);
+//        //if (person != null){}
+//        //max.orElse(new Person());
+//        //max.orElseGet(() -> new Person());
+//        //max.orElseThrow(() -> new );
+//        //final Optional<String> s = max.map(person -> person.getName());
+//        //if (max.isPresent()){}
+//
+//        final List<String> collect = list
+//                .stream()
+//                .filter(person -> {
+//                    System.out.println("filter");
+//                    return person.getName().endsWith("a");
+//                })
+//                .map(person -> {
+//                    System.out.println("map");
+//                    return person.getName();
+//                })
+//                .collect(Collectors.toList());
+//        System.out.println(collect);
+//        //filter
+//        //filter
+//        //map
+//        //filter
+//        //map
+//        //filter
+//        //filter
+//        //map
+//        //[Oksana, Marta, Olenka]
+
         // 7. Погрупувати людей по національності
+//        final Map<String, List<Person>> collect = list.stream().collect(Collectors.groupingBy(Person::getNationality));
+//        collect.entrySet().forEach(System.out::println);
 
+        // 8. Порахувати щасливе число по даті народження: скласти усі цифри дати народження.
+        // Та посортувати по ньому.
+        // Приклад: 12 (день) 03 (місяць) 1975 (рік) = 1 2 0 3 1 9 7 5=28=2 8=10=1 0=1.
+        list.stream()
+                .peek(person -> {
+                    LocalDate date = person.getBirthDate();
+                    final int year = date.getYear();
+                    final int monthValue = date.getMonthValue();
+                    final int dayOfMonth = date.getDayOfMonth();
+                    List<Integer> integers = toDigits(year);
+                    integers.addAll(toDigits(monthValue));
+                    integers.addAll(toDigits(dayOfMonth));
+                    int sum = 0;
+                    while (integers.size() > 1) {
+                        sum = integers.stream().mapToInt(Integer::intValue).sum();
+                        integers = toDigits(sum);
+                    }
+                    person.setLuckyNum(sum);
+                })
+                .sorted((o1, o2) -> o1.getLuckyNum()- o2.getLuckyNum())
+                .forEach(System.out::println);
+    }
 
-
-
+    public static List<Integer> toDigits(int num) {
+        List<Integer> digits = new ArrayList<>();
+        while (num > 0) {
+            digits.add(num % 10);
+            num = num / 10;
+        }
+        return digits;
     }
 }

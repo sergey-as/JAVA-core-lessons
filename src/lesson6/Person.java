@@ -6,14 +6,17 @@ import java.util.Objects;
 public class Person {
     private int id;
     private String name;
+    private String nationality;
     private LocalDate birthDate;
+    private int luckyNum;
 
     public Person() {
     }
 
-    public Person(int id, String name, LocalDate birthDate) {
+    public Person(int id, String name, String nationality, LocalDate birthDate) {
         this.id = id;
         this.name = name;
+        this.nationality = nationality;
         this.birthDate = birthDate;
     }
 
@@ -33,6 +36,14 @@ public class Person {
         this.name = name;
     }
 
+    public String getNationality() {
+        return nationality;
+    }
+
+    public void setNationality(String nationality) {
+        this.nationality = nationality;
+    }
+
     public LocalDate getBirthDate() {
         return birthDate;
     }
@@ -41,17 +52,25 @@ public class Person {
         this.birthDate = birthDate;
     }
 
+    public int getLuckyNum() {
+        return luckyNum;
+    }
+
+    public void setLuckyNum(int luckyNum) {
+        this.luckyNum = luckyNum;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Person person = (Person) o;
-        return id == person.id && Objects.equals(name, person.name) && Objects.equals(birthDate, person.birthDate);
+        return id == person.id && Objects.equals(name, person.name) && Objects.equals(nationality, person.nationality) && Objects.equals(birthDate, person.birthDate);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, birthDate);
+        return Objects.hash(id, name, nationality, birthDate);
     }
 
     @Override
@@ -59,7 +78,9 @@ public class Person {
         return "Person{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
+                ", nationality='" + nationality + '\'' +
                 ", birthDate=" + birthDate +
+                ", luckyNum=" + luckyNum +
                 '}';
     }
 }
