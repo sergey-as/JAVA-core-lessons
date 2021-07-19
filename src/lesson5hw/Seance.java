@@ -1,6 +1,7 @@
 package lesson5hw;
 
 public class Seance implements Comparable<Seance> {
+    private int id;
     private Movie movie;
     private Time startTime;
     private Time endTime;
@@ -11,10 +12,19 @@ public class Seance implements Comparable<Seance> {
     }
 
 
-    public Seance(Movie movie, Time startTime) {
+    public Seance(int id, Movie movie, Time startTime) {
+        this.id = id;
         this.movie = movie;
         this.startTime = startTime;
         this.endTime = Time.sumTime(startTime, movie.getDuration());
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public Movie getMovie() {
@@ -41,13 +51,14 @@ public class Seance implements Comparable<Seance> {
 
     @Override
     public int compareTo(Seance o) {
-        return Time.beforeTime(this.getStartTime(), o.getStartTime());
+        return Time.beforeTime(o.getStartTime(), this.getStartTime());
     }
 
     @Override
     public String toString() {
         return "Seance{" +
-                "movie=" + movie +
+                "id='" + id + '\'' +
+                ", movie=" + movie +
                 ", startTime=" + startTime +
                 ", endTime=" + endTime +
                 '}';

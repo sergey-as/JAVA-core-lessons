@@ -10,12 +10,10 @@ public class Time {
     }
 
     public Time(int hour, int min) {
-        if (hour < 0 || hour > 23 || min < 0 || min > 59) {
-            System.out.println(String.format("Wrong time %s:%s (hour: 0...23, min: 0...59)", hour, min));
-            return;
+        if (hourIsValid(hour) && minIsValid(min)) {
+            this.min = min;
+            this.hour = hour;
         }
-        this.min = min;
-        this.hour = hour;
     }
 
     public int getHour() {
@@ -23,11 +21,9 @@ public class Time {
     }
 
     public void setHour(int hour) {
-        if (hour < 0 || hour > 23) {
-            System.out.println(String.format("Wrong hour %s (hour: 0...23)", hour));
-            return;
+        if (hourIsValid(hour)) {
+            this.hour = hour;
         }
-        this.hour = hour;
     }
 
     public int getMin() {
@@ -35,11 +31,23 @@ public class Time {
     }
 
     public void setMin(int min) {
+        if (minIsValid(min)) {
+            this.min = min;
+        }
+    }
+
+    private boolean hourIsValid(int hour) {
+        if (hour < 0 || hour > 23) {
+            System.out.println(String.format("Wrong hour %s (hour: 0...23)", hour));
+            return false;
+        } else return true;
+    }
+
+    private boolean minIsValid(int min) {
         if (min < 0 || min > 59) {
             System.out.println(String.format("Wrong min %s (min: 0...59)", min));
-            return;
-        }
-        this.min = min;
+            return false;
+        } else return true;
     }
 
     public static Time sumTime(Time time1, Time time2) {
@@ -52,9 +60,9 @@ public class Time {
         LocalTime localTime1 = LocalTime.of(time1.getHour(), time1.getMin());
         LocalTime localTime2 = LocalTime.of(time2.getHour(), time2.getMin());
         int result = 0;
-        if (localTime1.isBefore(localTime2)){
+        if (localTime1.isBefore(localTime2)) {
             result = 1;
-        }else if (localTime1.isAfter(localTime2)){
+        } else if (localTime1.isAfter(localTime2)) {
             result = -1;
         }
         return result;
