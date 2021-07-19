@@ -51,14 +51,8 @@ public class Main {
         Seance seance4 = new Seance(4, movie4, new Time(18, 0));
         Seance seance5 = new Seance(5, movie5, new Time(20, 30));
         Seance seance6 = new Seance(6, movie1, new Time(20, 0));
-//        System.out.println(seance1);
-//        System.out.println(seance2);
-//        System.out.println(seance3);
-//        System.out.println(seance4);
-//        System.out.println(seance5);
 
         Schedule schedule1 = new Schedule();
-        schedule1.setId(1);
         schedule1.addSeance(seance1);
         schedule1.addSeance(seance2);
         schedule1.addSeance(seance3);
@@ -77,7 +71,6 @@ public class Main {
         System.out.println();
 
         Schedule schedule2 = new Schedule();
-        schedule2.setId(2);
         schedule2.addSeance(seance1);
         schedule2.addSeance(seance2);
         schedule2.addSeance(seance3);
@@ -93,9 +86,19 @@ public class Main {
         System.out.println(cinema);
         System.out.println();
 
-//        for (Days day : Days.values()) {
-//            System.out.println(day.name() + ": " + Days.valueOf(day.name().toUpperCase()));
-//        }
+        cinema.addSeance("sunday", new Seance(7, movie5, new Time(10, 15)));
+        cinema.addSeance("sunday", new Seance(8, movie3, new Time(15, 15)));
+        cinema.addSeance("sunday", new Seance(9, movie1, new Time(18, 15)));
+        System.out.println(cinema);
+        System.out.println();
+
+        cinema.removeMovie(movie1);
+        System.out.println(cinema);
+        System.out.println();
+
+        cinema.removeSeance("MONDAY",seance2);
+        System.out.println(cinema);
+        System.out.println();
 
     }
 }
