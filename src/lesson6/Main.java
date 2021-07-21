@@ -68,7 +68,7 @@ public class Main {
 //                .collect(Collectors.toList());
 //        System.out.println(names);
 
-        // 3.1 Поортувати по айді
+        // 3.1 Посортувати по айді
 //        list.stream().sorted((o1, o2) -> o1.getId() - o2.getId())
 //                .forEach(System.out::println);
         // 3.2 Поортувати по року
